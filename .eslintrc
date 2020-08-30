@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["prettier"],
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "rules": {
+    "no-console": 1,
+    "member-access": 1,
+    "object-literal-sort-keys": 1,
+    "ordered-imports": 1,
+    "interface-name": 1
+  }
+}
