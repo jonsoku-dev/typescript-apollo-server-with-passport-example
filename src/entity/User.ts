@@ -1,19 +1,32 @@
-import { Entity, PrimaryColumn, Column, BeforeInsert, BaseEntity } from 'typeorm';
-import { v4 } from 'uuid';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { ObjectType, Field, ID } from 'type-graphql';
+import { IsEmail } from 'class-validator';
 
 @Entity()
+@ObjectType()
 export class User extends BaseEntity {
-  @PrimaryColumn('uuid')
+  @Field(() => ID)
+  @PrimaryGeneratedColumn()
   id: string;
 
-  @Column('varchar', { length: 255 })
+  @Field(() => String)
+  @Column()
+  username: string;
+
+  @Field(() => String)
+  @Column({ unique: true })
+  @IsEmail()
   email: string;
 
-  @Column('text')
+  @Field(() => String)
+  @Column()
   password: string;
 
-  @BeforeInsert()
-  addId() {
-    this.id = v4();
-  }
+  @Field(() => Number)
+  @Column({ default: 0 })
+  view: number;
+
+  @CreateDateColumn() createdAt: string;
+
+  @UpdateDateColumn() updatedAt: string;
 }

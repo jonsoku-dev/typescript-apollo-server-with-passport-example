@@ -21,5 +21,6 @@ module.exports = {
     'ordered-imports': 0,
     'interface-name': 0,
     '@typescript-eslint/explicit-module-boundary-types': 0,
+    '@typescript-eslint/ban-types': 0,
   },
 };
