@@ -14,9 +14,9 @@ afterAll(async () => {
 });
 
 const registerMutation = `
-  mutation Register($input: RegisterInput!){
+  mutation REgister($data: RegisterInput!){
     register(
-      input: $input
+      data: $data
     ){
      id
      username
@@ -27,31 +27,38 @@ const registerMutation = `
 `;
 
 describe('Register', () => {
-  it('create user', async () => {
+  it.only('create user', async () => {
     const user = {
-      username: faker.name.lastName(),
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
       email: faker.internet.email(),
       password: faker.internet.password(),
     };
+
     const response = await gCall({
       source: registerMutation,
       variableValues: {
-        input: user,
+        data: user,
       },
     });
+
     if (response.errors) {
       console.log(response.errors[0].originalError);
     }
+
     expect(response).toMatchObject({
       data: {
         register: {
-          username: user.username,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
         },
       },
     });
+
     const dbUser = await User.findOne({ where: { email: user.email } });
     expect(dbUser).toBeDefined();
-    expect(dbUser!.username).toBe(user.username);
+    // expect(dbUser!.confirmed).toBeFalsy();
+    // expect(dbUser!.firstName).toBe(user.firstName);
   });
 });

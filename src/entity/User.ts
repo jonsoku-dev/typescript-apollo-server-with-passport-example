@@ -1,6 +1,7 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 import { IsEmail } from 'class-validator';
+import { Dated } from './Dated';
 
 @Entity()
 @ObjectType()
@@ -22,11 +23,6 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  @Field(() => Number)
-  @Column({ default: 0 })
-  view: number;
-
-  @CreateDateColumn() createdAt: string;
-
-  @UpdateDateColumn() updatedAt: string;
+  @Column(() => Dated)
+  dated: Dated;
 }
